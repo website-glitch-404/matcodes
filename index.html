@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MATLAB Codes Library</title>
 <style>
-body{margin:0;font-family:Consolas,monospace;background:#0d1117;color:#e6edf3}header{padding:20px;background:#161b22;position:sticky;top:0}h1{margin:0;color:#58a6ff}main{padding:20px;max-width:1200px;margin:auto}.card{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:18px;margin-bottom:20px}h2{color:#f78166}.toolbar{display:flex;gap:10px;margin-bottom:10px}.btn{background:#238636;color:white;border:none;padding:8px 12px;border-radius:8px;cursor:pointer}pre{white-space:pre-wrap;overflow:auto;background:#0d1117;padding:15px;border-radius:10px;border:1px solid #30363d}.search{width:100%;padding:10px;border-radius:8px;border:1px solid #30363d;background:#0d1117;color:#e6edf3}
+body{margin:0;background:#0d1117;color:#e6edf3;font-family:Consolas,monospace}header{position:sticky;top:0;background:#161b22;padding:18px;border-bottom:1px solid #30363d}h1{margin:0;color:#58a6ff;font-size:28px}.wrap{max-width:1200px;margin:auto;padding:20px}.search{width:100%;padding:12px;border-radius:10px;border:1px solid #30363d;background:#0d1117;color:#e6edf3;margin-bottom:20px}.card{background:#161b22;border:1px solid #30363d;border-radius:14px;padding:18px;margin-bottom:20px}h2{margin-top:0;color:#f78166}.btn{background:#238636;color:#fff;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;margin-bottom:10px}pre{white-space:pre-wrap;overflow:auto;background:#0d1117;padding:15px;border-radius:10px;border:1px solid #30363d;line-height:1.4}footer{text-align:center;padding:20px;color:#8b949e}
 </style>
 <script>
 function copyCode(id){navigator.clipboard.writeText(document.getElementById(id).innerText)}
@@ -13,118 +13,115 @@ function filterCards(){let q=document.getElementById('search').value.toLowerCase
 </script>
 </head>
 <body>
-<header><h1>MATLAB Codes Library ⚡</h1></header>
-<main>
-<input id="search" class="search" placeholder="Search week or keyword..." onkeyup="filterCards()">
+<header><div class='wrap'><h1>MATLAB Codes Library ⚡</h1></div></header>
+<div class='wrap'>
+<input id='search' class='search' placeholder='Search week, topic, equation...' onkeyup='filterCards()'>
 
-<div class="card"><h2>WEEK 1(a) Separation Tank</h2><div class="toolbar"><button class="btn" onclick="copyCode('c1')">Copy</button></div><pre id="c1">clc;
+<div class='card'><h2>Week 1(a) Separation Tank</h2><button class='btn' onclick="copyCode('w1a')">Copy</button><pre id='w1a'>clc;
 clear;
-a = [0.07 0.18 0.15 0.24;
-0.04 0.24 0.10 0.65;
-0.54 0.42 0.54 0.10;
-0.35 0.16 0.21 0.01];
-b = 70*[0.15;0.25;0.4;0.2];
-X = a\\b;
-fprintf('D1 = %0.2f kgmol/min\n',X(1))
-fprintf('B1 = %0.2f kgmol/min\n',X(2))
-fprintf('D2 = %0.2f kgmol/min\n',X(3))
-fprintf('B2 = %0.2f kgmol/min\n',X(4))</pre></div>
+a=[0.07 0.18 0.15 0.24;0.04 0.24 0.10 0.65;0.54 0.42 0.54 0.10;0.35 0.16 0.21 0.01];
+b=70*[0.15;0.25;0.4;0.2];
+X=a\b;
+fprintf('D1=%0.2f\n',X(1))
+fprintf('B1=%0.2f\n',X(2))
+fprintf('D2=%0.2f\n',X(3))
+fprintf('B2=%0.2f\n',X(4))</pre></div>
 
-<div class="card"><h2>WEEK 2 Energy Balance</h2><div class="toolbar"><button class="btn" onclick="copyCode('c2')">Copy</button></div><pre id="c2">clc
+<div class='card'><h2>Week 1(b) Stream Composition</h2><button class='btn' onclick="copyCode('w1b')">Copy</button><pre id='w1b'>clc;
+clear;
+D1=26.25;B1=17.5;D2=8.75;B2=17.5;
+D=D1+B1;
+B=D2+B2;</pre></div>
+
+<div class='card'><h2>Week 2 Energy Balance</h2><button class='btn' onclick="copyCode('w2')">Copy</button><pre id='w2'>clc
 n=11.3*1000;
 Q=422*(10^6);
 T1=533.15;
 A=3.578;
-B=3.020*10^(-3);
-D=(-0.186)*10^(5);
+B=3.020e-3;
+D=-0.186e5;
 R=8.314;
-delH=(Q/n);
+delH=Q/n;
 Tguess=733.15;
 Cpm=A+(B*(Tguess+T1)/2)+(D/(Tguess*T1));
 T2guess=((delH/R)/Cpm)+T1;
-tol=10^(-6);
-while abs(T2guess-Tguess)>tol
+while abs(T2guess-Tguess)>1e-6
 Tguess=T2guess;
 Cpm=A+(B*(Tguess+T1)/2)+(D/(Tguess*T1));
 T2guess=((delH/R)/Cpm)+T1;
-end
-T2=T2guess;
-fprintf('T2=%0.2f K\n',T2)</pre></div>
-
-<div class="card"><h2>WEEK 5 RK EOS</h2><div class="toolbar"><button class="btn" onclick="copyCode('c3')">Copy</button></div><pre id="c3">clc;
-clear;
-t = 473.15;
-p = 12;
-tc = 425.1;
-pc = 37.96;
-r = 83.14;
-a = 0.42748*(r^2*tc^2.5)/(pc*t^0.5);
-b = 0.08664*(r*tc/pc);
-A = a*p/(r^2*t^2);
-B = b*p/(r*t);
-q = A-B-B^2;
-R = -A*B;
-f = q-1/3;
-g = (27*R+9*q-2)/27;
-C = (g^2)/4 + (f^3)/27;
-if C>0
-D=(-g/2+sqrt(C))^(1/3);
-E=(-g/2-sqrt(C))^(1/3);
-Z=D+E+1/3;
-end
-v=(r*t*Z)/p;
-fprintf('Z=%0.4f\n',Z)
-fprintf('v=%0.4f\n',v)</pre></div>
-
-<div class="card"><h2>WEEK 6 Van der Waals</h2><div class="toolbar"><button class="btn" onclick="copyCode('c4')">Copy</button></div><pre id="c4">clc;
-clear;
-Tc=304.2;
-Pc=73.83;
-Tr=1.2;
-T=Tc*Tr;
-R=83.14;
-a=(27*R^2*Tc^2)/(64*Pc);
-b=(R*Tc)/(8*Pc);
-for Pr=0.1:0.1:10
-P=Pc*Pr;
-S=roots([1 -(b+R*T/P) a/P -(a*b)/P]);
-V=max(real(S(imag(S)==0)));
-Z=(P*V)/(R*T);
-plot(Pr,Z,'b.')
-hold on
 end</pre></div>
 
-<div class="card"><h2>WEEK 9 Heat Conduction ODE45</h2><div class="toolbar"><button class="btn" onclick="copyCode('c5')">Copy</button></div><pre id="c5">function Tdot = abcd(t,T)
-T1=0;T2=T(1);T3=T(2);T4=T(3);T5=T(4);T6=T(5);T7=T(6);T8=T(7);T9=T(8);T10=T(9);
-A=2e-5;delx=0.1;
-dT2dt=(A/delx^2)*(T3-2*T2+T1);
-dT3dt=(A/delx^2)*(T4-2*T3+T2);
-dT4dt=(A/delx^2)*(T5-2*T4+T3);
-dT5dt=(A/delx^2)*(T6-2*T5+T4);
-dT6dt=(A/delx^2)*(T7-2*T6+T5);
-dT7dt=(A/delx^2)*(T8-2*T7+T6);
-dT8dt=(A/delx^2)*(T9-2*T8+T7);
-dT9dt=(A/delx^2)*(T10-2*T9+T8);
-dT10dt=(A/delx^2)*(T9-T10);
-Tdot=[dT2dt;dT3dt;dT4dt;dT5dt;dT6dt;dT7dt;dT8dt;dT9dt;dT10dt];</pre></div>
+<div class='card'><h2>Week 3 Pipeline Flow Rate</h2><button class='btn' onclick="copyCode('w3')">Copy</button><pre id='w3'>clc;
+T=60;P1=150;Z1=0;P2=0;Z2=300;L=1000;D=7.981/12;
+G=32.174;Gc=32.174;ROW=62.3539;MUE=0.76e-3;e=0.00015;
+delP=(P2-P1)*144;delZ=Z2-Z1;
+U(1)=10;
+for i=1:100
+Re=(ROW*D*U(i))/MUE;
+if Re<2100
+Ff=16/Re;
+else
+Ff=1/(16*(log10(((e/D)/3.7)-((5.02/Re)*log10(((e/D)/3.7)+(14.5/Re)))))^2);
+end
+U(i+1)=sqrt(((G*delZ)+(Gc*delP/ROW))/(0.5-(2*Ff*L/D)));
+if abs(U(i)-U(i+1))<1e-5
+U=U(i+1);break;end
+end</pre></div>
 
-<div class="card"><h2>WEEK 10 Distillation ODE45</h2><div class="toolbar"><button class="btn" onclick="copyCode('c6')">Copy</button></div><pre id="c6">function Ydot = program1(x2,Y)
-L=Y(1);
-T=Y(2);
-Ptotal=1.2*760;
-A1=6.90565;B1=1211.033;C1=220.79;
-A2=6.95464;B2=1344.8;C2=219.482;
-P1=10^(A1-(B1/(T+C1)));
-P2=10^(A2-(B2/(T+C2)));
-K1=P1/Ptotal;
-K2=P2/Ptotal;
-x1=1-x2;
-E=1-(K1*x1)*(K2*x2);
-dldx2=L/(x2*(K2-1));
-Kc=0.5*10^6;
-dtdx2=Kc*E;
-Ydot=[dldx2;dtdx2];</pre></div>
+<div class='card'><h2>Week 4(a) Function File Terminal Velocity</h2><button class='btn' onclick="copyCode('w4a')">Copy</button><pre id='w4a'>function fut=program1(ut)
+rhop=1800;rho=994.6;g=9.80665;Dp=0.208e-3;myu=8.931e-4;
+Re=(rho*Dp*ut)/myu;
+if Re<0.1
+cd=24/Re;
+else
+cd=(24/Re)*(1+0.14*Re^0.7);
+end
+fut=(ut^2*3*cd*rho)-(4*g*(rhop-rho)*Dp);</pre></div>
 
-</main>
+<div class='card'><h2>Week 4(b) Main File Terminal Velocity</h2><button class='btn' onclick="copyCode('w4b')">Copy</button><pre id='w4b'>clc;
+uto=4;
+ut=fzero(@program1,uto);</pre></div>
+
+<div class='card'><h2>Week 5(a) RK EOS</h2><button class='btn' onclick="copyCode('w5a')">Copy</button><pre id='w5a'>clc;
+t=473.15;p=12;tc=425.1;pc=37.96;r=83.14;
+a=0.42748*(r^2*tc^2.5)/(pc*t^0.5);
+b=0.08664*(r*tc/pc);</pre></div>
+
+<div class='card'><h2>Week 5(b) Saturated Vapour / Liquid</h2><button class='btn' onclick="copyCode('w5b')">Copy</button><pre id='w5b'>clc;
+t=373.15;p=15.41;tc=425.1;pc=37.96;r=83.14;</pre></div>
+
+<div class='card'><h2>Week 6 Van der Waals EOS</h2><button class='btn' onclick="copyCode('w6')">Copy</button><pre id='w6'>clc;
+Tc=304.2;Pc=73.83;Tr=1.2;T=Tc*Tr;R=83.14;</pre></div>
+
+<div class='card'><h2>Week 7(a) Function File Steam RK</h2><button class='btn' onclick="copyCode('w7a')">Copy</button><pre id='w7a'>function fz=program1(z)
+T=373.15;P=101325;Tc=647.4;Pc=221.9e5;R=8.314;</pre></div>
+
+<div class='card'><h2>Week 7(b) Main File Steam RK</h2><button class='btn' onclick="copyCode('w7b')">Copy</button><pre id='w7b'>clc;
+zinit=1;
+z=fzero(@program1,zinit);</pre></div>
+
+<div class='card'><h2>Week 8 Double Pipe Heat Exchanger</h2><button class='btn' onclick="copyCode('w8')">Copy</button><pre id='w8'>clc;
+tc1=303;tc2=328;th1=388;Pc=1000;Ph=950;Cpc=4187;Cph=2930;U=3490;</pre></div>
+
+<div class='card'><h2>Week 9(a) Function File Heat Conduction</h2><button class='btn' onclick="copyCode('w9a')">Copy</button><pre id='w9a'>function Tdot=program1(t,T)
+T1=0;T2=T(1);T3=T(2);T4=T(3);T5=T(4);T6=T(5);T7=T(6);T8=T(7);T9=T(8);T10=T(9);</pre></div>
+
+<div class='card'><h2>Week 9(b) Main File Heat Conduction</h2><button class='btn' onclick="copyCode('w9b')">Copy</button><pre id='w9b'>clc;
+tspan=[0 6000];
+T0=[100 100 100 100 100 100 100 100 100];
+[t,T]=ode45(@program1,tspan,T0);</pre></div>
+
+<div class='card'><h2>Week 10(a) Function File Distillation</h2><button class='btn' onclick="copyCode('w10a')">Copy</button><pre id='w10a'>function Ydot=program1(x2,Y)
+L=Y(1);T=Y(2);Ptotal=1.2*760;</pre></div>
+
+<div class='card'><h2>Week 10(b) Main File Distillation</h2><button class='btn' onclick="copyCode('w10b')">Copy</button><pre id='w10b'>clc;
+To=95.6;
+x2span=0.4:0.01:0.8;
+Lo=100;
+Yo=[Lo;To];
+[x2,Y]=ode45(@program1,x2span,Yo);</pre></div>
+
+</div>
+<footer>MATLAB Codes Vault ⚡ GitHub Pages Ready</footer>
 </body>
 </html>
