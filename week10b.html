@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 10(b)</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    background:#000;
+    color:#fff;
+    font-family:Arial, Helvetica, sans-serif;
+    padding:40px;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+}
+
+h1{
+    font-size:34px;
+    font-weight:600;
+    margin-bottom:10px;
+}
+
+p{
+    color:#bfbfbf;
+    margin-bottom:30px;
+}
+
+.actions{
+    margin-bottom:20px;
+}
+
+button,a{
+    background:#111;
+    color:#fff;
+    border:1px solid #333;
+    padding:12px 18px;
+    text-decoration:none;
+    cursor:pointer;
+    margin-right:10px;
+}
+
+button:hover,a:hover{
+    border-color:#fff;
+}
+
+pre{
+    background:#111;
+    border:1px solid #333;
+    padding:25px;
+    line-height:1.6;
+    overflow:auto;
+    white-space:pre-wrap;
+}
+
+</style>
+
+<script>
+function copyCode(){
+navigator.clipboard.writeText(document.getElementById("code").innerText);
+}
+</script>
+
+</head>
+<body>
+
+<div class="container">
+
+<h1>Week 10(b)</h1>
+<p>Main File for Solving Differential Algebraic Equations Using ode45</p>
+
+<div class="actions">
+<button onclick="copyCode()">Copy Code</button>
+<a href="index.html">Back</a>
+</div>
+
+<pre id="code">
+clc;
+clear all;
+
+To = 95.6;
+
+x2span = 0.4:0.01:0.8;
+
+Lo = 100;
+
+Yo = [Lo;To];
+
+[x2,Y] = ode45(@program1,x2span,Yo);
+
+fprintf('x2   L(moles in still)   temp\n')
+fprintf('---------------------------------\n')
+
+disp([x2 Y])
+
+subplot(2,1,1)
+
+plot(x2,Y(:,1),'b-')
+
+xlabel('mole fraction of toluene, x2')
+ylabel('liquid remaining in the still, L(moles)')
+
+subplot(2,1,2)
+
+plot(x2,Y(:,2),'b*')
+
+xlabel('mole fraction of toluene, x2')
+ylabel('temperature in the still, T(oC)')
+</pre>
+
+</div>
+
+</body>
+</html>
