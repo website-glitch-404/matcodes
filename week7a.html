@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 7(a)</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    background:#000;
+    color:#fff;
+    font-family:Arial, Helvetica, sans-serif;
+    padding:40px;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+}
+
+h1{
+    font-size:34px;
+    font-weight:600;
+    margin-bottom:10px;
+}
+
+p{
+    color:#bfbfbf;
+    margin-bottom:30px;
+}
+
+.actions{
+    margin-bottom:20px;
+}
+
+button,a{
+    background:#111;
+    color:#fff;
+    border:1px solid #333;
+    padding:12px 18px;
+    text-decoration:none;
+    cursor:pointer;
+    margin-right:10px;
+}
+
+button:hover,a:hover{
+    border-color:#fff;
+}
+
+pre{
+    background:#111;
+    border:1px solid #333;
+    padding:25px;
+    line-height:1.6;
+    overflow:auto;
+    white-space:pre-wrap;
+}
+
+</style>
+
+<script>
+function copyCode(){
+navigator.clipboard.writeText(document.getElementById("code").innerText);
+}
+</script>
+
+</head>
+<body>
+
+<div class="container">
+
+<h1>Week 7(a)</h1>
+<p>Function File for Thermodynamic Properties of Steam from Redlich Kwong Equation of State</p>
+
+<div class="actions">
+<button onclick="copyCode()">Copy Code</button>
+<a href="index.html">Back</a>
+</div>
+
+<pre id="code">
+function fz = program1(z)
+
+T = 373.15;
+P = 101325;
+Tc = 647.4;
+Pc = 221.9*10^5;
+R = 8.314;
+
+a = 0.42748*R^2*Tc^2.5/(Pc*T^0.5);
+b = 0.08664*R*Tc/Pc;
+
+A = (a*P)/(R^2*T^2);
+B = (b*P)/(R*T);
+
+fz = z^3 - z^2 + (A-B-B^2)*z - A*B;
+</pre>
+
+</div>
+
+</body>
+</html>
