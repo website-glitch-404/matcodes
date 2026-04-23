@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MATLAB Codes Library</title>
+<style>
+body{margin:0;font-family:Consolas,monospace;background:#0d1117;color:#e6edf3}header{padding:20px;background:#161b22;position:sticky;top:0}h1{margin:0;color:#58a6ff}main{padding:20px;max-width:1200px;margin:auto}.card{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:18px;margin-bottom:20px}h2{color:#f78166}.toolbar{display:flex;gap:10px;margin-bottom:10px}.btn{background:#238636;color:white;border:none;padding:8px 12px;border-radius:8px;cursor:pointer}pre{white-space:pre-wrap;overflow:auto;background:#0d1117;padding:15px;border-radius:10px;border:1px solid #30363d}.search{width:100%;padding:10px;border-radius:8px;border:1px solid #30363d;background:#0d1117;color:#e6edf3}
+</style>
+<script>
+function copyCode(id){navigator.clipboard.writeText(document.getElementById(id).innerText)}
+function filterCards(){let q=document.getElementById('search').value.toLowerCase();document.querySelectorAll('.card').forEach(c=>{c.style.display=c.innerText.toLowerCase().includes(q)?'block':'none'})}
+</script>
+</head>
+<body>
+<header><h1>MATLAB Codes Library ⚡</h1></header>
+<main>
+<input id="search" class="search" placeholder="Search week or keyword..." onkeyup="filterCards()">
+
+<div class="card"><h2>WEEK 1(a) Separation Tank</h2><div class="toolbar"><button class="btn" onclick="copyCode('c1')">Copy</button></div><pre id="c1">clc;
+clear;
+a = [0.07 0.18 0.15 0.24;
+0.04 0.24 0.10 0.65;
+0.54 0.42 0.54 0.10;
+0.35 0.16 0.21 0.01];
+b = 70*[0.15;0.25;0.4;0.2];
+X = a\\b;
+fprintf('D1 = %0.2f kgmol/min\n',X(1))
+fprintf('B1 = %0.2f kgmol/min\n',X(2))
+fprintf('D2 = %0.2f kgmol/min\n',X(3))
+fprintf('B2 = %0.2f kgmol/min\n',X(4))</pre></div>
+
+<div class="card"><h2>WEEK 2 Energy Balance</h2><div class="toolbar"><button class="btn" onclick="copyCode('c2')">Copy</button></div><pre id="c2">clc
+n=11.3*1000;
+Q=422*(10^6);
+T1=533.15;
+A=3.578;
+B=3.020*10^(-3);
+D=(-0.186)*10^(5);
+R=8.314;
+delH=(Q/n);
+Tguess=733.15;
+Cpm=A+(B*(Tguess+T1)/2)+(D/(Tguess*T1));
+T2guess=((delH/R)/Cpm)+T1;
+tol=10^(-6);
+while abs(T2guess-Tguess)>tol
+Tguess=T2guess;
+Cpm=A+(B*(Tguess+T1)/2)+(D/(Tguess*T1));
+T2guess=((delH/R)/Cpm)+T1;
+end
+T2=T2guess;
+fprintf('T2=%0.2f K\n',T2)</pre></div>
+
+<div class="card"><h2>WEEK 5 RK EOS</h2><div class="toolbar"><button class="btn" onclick="copyCode('c3')">Copy</button></div><pre id="c3">clc;
+clear;
+t = 473.15;
+p = 12;
+tc = 425.1;
+pc = 37.96;
+r = 83.14;
+a = 0.42748*(r^2*tc^2.5)/(pc*t^0.5);
+b = 0.08664*(r*tc/pc);
+A = a*p/(r^2*t^2);
+B = b*p/(r*t);
+q = A-B-B^2;
+R = -A*B;
+f = q-1/3;
+g = (27*R+9*q-2)/27;
+C = (g^2)/4 + (f^3)/27;
+if C>0
+D=(-g/2+sqrt(C))^(1/3);
+E=(-g/2-sqrt(C))^(1/3);
+Z=D+E+1/3;
+end
+v=(r*t*Z)/p;
+fprintf('Z=%0.4f\n',Z)
+fprintf('v=%0.4f\n',v)</pre></div>
+
+<div class="card"><h2>WEEK 6 Van der Waals</h2><div class="toolbar"><button class="btn" onclick="copyCode('c4')">Copy</button></div><pre id="c4">clc;
+clear;
+Tc=304.2;
+Pc=73.83;
+Tr=1.2;
+T=Tc*Tr;
+R=83.14;
+a=(27*R^2*Tc^2)/(64*Pc);
+b=(R*Tc)/(8*Pc);
+for Pr=0.1:0.1:10
+P=Pc*Pr;
+S=roots([1 -(b+R*T/P) a/P -(a*b)/P]);
+V=max(real(S(imag(S)==0)));
+Z=(P*V)/(R*T);
+plot(Pr,Z,'b.')
+hold on
+end</pre></div>
+
+<div class="card"><h2>WEEK 9 Heat Conduction ODE45</h2><div class="toolbar"><button class="btn" onclick="copyCode('c5')">Copy</button></div><pre id="c5">function Tdot = abcd(t,T)
+T1=0;T2=T(1);T3=T(2);T4=T(3);T5=T(4);T6=T(5);T7=T(6);T8=T(7);T9=T(8);T10=T(9);
+A=2e-5;delx=0.1;
+dT2dt=(A/delx^2)*(T3-2*T2+T1);
+dT3dt=(A/delx^2)*(T4-2*T3+T2);
+dT4dt=(A/delx^2)*(T5-2*T4+T3);
+dT5dt=(A/delx^2)*(T6-2*T5+T4);
+dT6dt=(A/delx^2)*(T7-2*T6+T5);
+dT7dt=(A/delx^2)*(T8-2*T7+T6);
+dT8dt=(A/delx^2)*(T9-2*T8+T7);
+dT9dt=(A/delx^2)*(T10-2*T9+T8);
+dT10dt=(A/delx^2)*(T9-T10);
+Tdot=[dT2dt;dT3dt;dT4dt;dT5dt;dT6dt;dT7dt;dT8dt;dT9dt;dT10dt];</pre></div>
+
+<div class="card"><h2>WEEK 10 Distillation ODE45</h2><div class="toolbar"><button class="btn" onclick="copyCode('c6')">Copy</button></div><pre id="c6">function Ydot = program1(x2,Y)
+L=Y(1);
+T=Y(2);
+Ptotal=1.2*760;
+A1=6.90565;B1=1211.033;C1=220.79;
+A2=6.95464;B2=1344.8;C2=219.482;
+P1=10^(A1-(B1/(T+C1)));
+P2=10^(A2-(B2/(T+C2)));
+K1=P1/Ptotal;
+K2=P2/Ptotal;
+x1=1-x2;
+E=1-(K1*x1)*(K2*x2);
+dldx2=L/(x2*(K2-1));
+Kc=0.5*10^6;
+dtdx2=Kc*E;
+Ydot=[dldx2;dtdx2];</pre></div>
+
+</main>
+</body>
+</html>
