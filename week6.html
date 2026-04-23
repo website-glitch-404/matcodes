@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 6</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    background:#000;
+    color:#fff;
+    font-family:Arial, Helvetica, sans-serif;
+    padding:40px;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+}
+
+h1{
+    font-size:34px;
+    font-weight:600;
+    margin-bottom:10px;
+}
+
+p{
+    color:#bfbfbf;
+    margin-bottom:30px;
+}
+
+.actions{
+    margin-bottom:20px;
+}
+
+button,a{
+    background:#111;
+    color:#fff;
+    border:1px solid #333;
+    padding:12px 18px;
+    text-decoration:none;
+    cursor:pointer;
+    margin-right:10px;
+}
+
+button:hover,a:hover{
+    border-color:#fff;
+}
+
+pre{
+    background:#111;
+    border:1px solid #333;
+    padding:25px;
+    line-height:1.6;
+    overflow:auto;
+    white-space:pre-wrap;
+}
+
+</style>
+
+<script>
+function copyCode(){
+navigator.clipboard.writeText(document.getElementById("code").innerText);
+}
+</script>
+
+</head>
+<body>
+
+<div class="container">
+
+<h1>Week 6</h1>
+<p>Compressibility Factor Variation from Van der Waals Equation of State</p>
+
+<div class="actions">
+<button onclick="copyCode()">Copy Code</button>
+<a href="index.html">Back</a>
+</div>
+
+<pre id="code">
+clc;
+clear all;
+
+Tc = 304.2;
+Pc = 73.83;
+Tr = 1.2;
+
+T = Tc*Tr;
+
+R = 83.14;
+
+a = (27*R^2*Tc^2)/(64*Pc);
+b = (R*Tc)/(8*Pc);
+
+fprintf('Pr      Z \n')
+
+for Pr = 0.1:0.1:10
+
+    P = Pc*Pr;
+
+    A = 1;
+    B = -(b + (R*T/P));
+    C = a/P;
+    D = -(a*b)/P;
+
+    S = roots([A B C D]);
+
+    for j = 1:3
+        if imag(S(j)) == 0
+            V = S(j);
+        end
+    end
+
+    Z = (P*V)/(R*T);
+
+    fprintf('%1.4f   %1.4f \n',Pr,Z)
+
+    plot(Pr,Z,'b.')
+    hold on
+
+end
+
+xlabel('reduced pressure of CO2, Pr')
+ylabel('compressibility factor of CO2, Z')
+title('Variation of Z with Pr')
+legend('Tr = 1.2')
+</pre>
+
+</div>
+
+</body>
+</html>
