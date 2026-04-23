@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 1(a)</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    background:#000;
+    color:#fff;
+    font-family:Arial, Helvetica, sans-serif;
+    padding:40px;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+}
+
+h1{
+    font-size:34px;
+    margin-bottom:10px;
+    font-weight:600;
+}
+
+p{
+    color:#bfbfbf;
+    margin-bottom:30px;
+}
+
+.actions{
+    margin-bottom:20px;
+}
+
+button,a{
+    background:#111;
+    color:#fff;
+    border:1px solid #333;
+    padding:12px 18px;
+    text-decoration:none;
+    cursor:pointer;
+    margin-right:10px;
+}
+
+button:hover,a:hover{
+    border-color:#fff;
+}
+
+pre{
+    background:#111;
+    border:1px solid #333;
+    padding:25px;
+    overflow:auto;
+    line-height:1.6;
+    white-space:pre-wrap;
+}
+
+</style>
+
+<script>
+function copyCode(){
+navigator.clipboard.writeText(document.getElementById("code").innerText);
+}
+</script>
+
+</head>
+<body>
+
+<div class="container">
+
+<h1>Week 1(a)</h1>
+<p>Steady State Material Balance on Separation Tank</p>
+
+<div class="actions">
+<button onclick="copyCode()">Copy Code</button>
+<a href="index.html">Back</a>
+</div>
+
+<pre id="code">
+clc;
+clear;
+
+a = [0.07 0.18 0.15 0.24;
+     0.04 0.24 0.10 0.65;
+     0.54 0.42 0.54 0.10;
+     0.35 0.16 0.21 0.01];
+
+b = 70*[0.15;0.25;0.4;0.2];
+
+X = a\b;
+
+fprintf('the molar flow rate of stream D1 = %0.2f kgmol/min \n',X(1))
+fprintf('the molar flow rate of stream B1 = %0.2f kgmol/min \n',X(2))
+fprintf('the molar flow rate of stream D2 = %0.2f kgmol/min \n',X(3))
+fprintf('the molar flow rate of stream B2 = %0.2f kgmol/min \n',X(4))
+</pre>
+
+</div>
+
+</body>
+</html>
