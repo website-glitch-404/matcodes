@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 7(b)</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    background:#000;
+    color:#fff;
+    font-family:Arial, Helvetica, sans-serif;
+    padding:40px;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+}
+
+h1{
+    font-size:34px;
+    font-weight:600;
+    margin-bottom:10px;
+}
+
+p{
+    color:#bfbfbf;
+    margin-bottom:30px;
+}
+
+.actions{
+    margin-bottom:20px;
+}
+
+button,a{
+    background:#111;
+    color:#fff;
+    border:1px solid #333;
+    padding:12px 18px;
+    text-decoration:none;
+    cursor:pointer;
+    margin-right:10px;
+}
+
+button:hover,a:hover{
+    border-color:#fff;
+}
+
+pre{
+    background:#111;
+    border:1px solid #333;
+    padding:25px;
+    line-height:1.6;
+    overflow:auto;
+    white-space:pre-wrap;
+}
+
+</style>
+
+<script>
+function copyCode(){
+navigator.clipboard.writeText(document.getElementById("code").innerText);
+}
+</script>
+
+</head>
+<body>
+
+<div class="container">
+
+<h1>Week 7(b)</h1>
+<p>Main File for Thermodynamic Properties of Steam</p>
+
+<div class="actions">
+<button onclick="copyCode()">Copy Code</button>
+<a href="index.html">Back</a>
+</div>
+
+<pre id="code">
+clc;
+clear all;
+
+T = 373.15;
+P = 101325;
+Tc = 647.4;
+Pc = 221.9*10^5;
+R = 8.314;
+
+a = 0.42748*R^2*Tc^2.5/(Pc*T^0.5);
+b = 0.08664*R*Tc/Pc;
+
+A = (a*P)/(R^2*T^2);
+B = (b*P)/(R*T);
+
+zinit = 1;
+
+z = fzero(@program1,zinit);
+
+V = (z*R*T)/P;
+Vm = V*1000;
+Vs = Vm/18;
+
+delHr = R*T*(z-1-(1.5*a)/(b*R*T)*log(1+(b/V)));
+
+a0 = 7.7;
+a1 = 0.04594*10^(-2);
+a2 = 0.2521*10^(-5);
+a3 = -0.08587*10^(-9);
+
+T0 = 273.15;
+
+cp = a0*(T-T0) + (a1/2)*(T^2-T0^2) + (a2/3)*(T^3-T0^3) + (a3/4)*(T^4-T0^4);
+
+intcp = cp*4.186/18;
+
+H1 = 0;
+Hv = 2501.3;
+
+Hvig = H1 + Hv + intcp;
+
+H = (delHr/18) + Hvig;
+
+fprintf('the compressibility factor of water at 373.15 K and 1 atm is : %1.4f\n',z)
+fprintf('the molar volume of water at 373.15 K and 1 atm is : %1.4f m^3/kg.mol \n',Vm)
+fprintf('the specific volume of water at 373.15 K and 1 atm is : %1.4f m^3/kg\n',Vs)
+fprintf('the specific enthalpy of water at 373.15 K and 1 atm is : %1.4f*10^3 J/kg\n',H)
+</pre>
+
+</div>
+
+</body>
+</html>
