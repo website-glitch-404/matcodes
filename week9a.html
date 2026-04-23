@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 9(a)</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    background:#000;
+    color:#fff;
+    font-family:Arial, Helvetica, sans-serif;
+    padding:40px;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+}
+
+h1{
+    font-size:34px;
+    font-weight:600;
+    margin-bottom:10px;
+}
+
+p{
+    color:#bfbfbf;
+    margin-bottom:30px;
+}
+
+.actions{
+    margin-bottom:20px;
+}
+
+button,a{
+    background:#111;
+    color:#fff;
+    border:1px solid #333;
+    padding:12px 18px;
+    text-decoration:none;
+    cursor:pointer;
+    margin-right:10px;
+}
+
+button:hover,a:hover{
+    border-color:#fff;
+}
+
+pre{
+    background:#111;
+    border:1px solid #333;
+    padding:25px;
+    line-height:1.6;
+    overflow:auto;
+    white-space:pre-wrap;
+}
+
+</style>
+
+<script>
+function copyCode(){
+navigator.clipboard.writeText(document.getElementById("code").innerText);
+}
+</script>
+
+</head>
+<body>
+
+<div class="container">
+
+<h1>Week 9(a)</h1>
+<p>Function File for Method of Lines for Partial Differential Equation</p>
+
+<div class="actions">
+<button onclick="copyCode()">Copy Code</button>
+<a href="index.html">Back</a>
+</div>
+
+<pre id="code">
+function Tdot = program1(t,T)
+
+T1 = 0;
+T2 = T(1);
+T3 = T(2);
+T4 = T(3);
+T5 = T(4);
+T6 = T(5);
+T7 = T(6);
+T8 = T(7);
+T9 = T(8);
+T10 = T(9);
+
+A = 2*10^(-5);
+delx = 0.1;
+
+dT2dt  = (A/delx^2)*(T3-2*T2+T1);
+dT3dt  = (A/delx^2)*(T4-2*T3+T2);
+dT4dt  = (A/delx^2)*(T5-2*T4+T3);
+dT5dt  = (A/delx^2)*(T6-2*T5+T4);
+dT6dt  = (A/delx^2)*(T7-2*T6+T5);
+dT7dt  = (A/delx^2)*(T8-2*T7+T6);
+dT8dt  = (A/delx^2)*(T9-2*T8+T7);
+dT9dt  = (A/delx^2)*(T10-2*T9+T8);
+dT10dt = (A/delx^2)*(T9-T10);
+
+Tdot = [dT2dt;dT3dt;dT4dt;dT5dt;dT6dt;dT7dt;dT8dt;dT9dt;dT10dt];
+</pre>
+
+</div>
+
+</body>
+</html>
